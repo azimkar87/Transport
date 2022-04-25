@@ -1,0 +1,105 @@
+﻿
+@using Kendo.Mvc.UI;
+@using Kendo.Mvc;
+
+
+@{
+    ViewData["Title"] = "Входящие документы";
+}
+
+</br>
+
+</br>
+</br>
+
+<div class="div_tabstrip">
+    @(Html.Kendo().TabStrip()
+          .Name("tabstrip")
+
+          .Animation(animation =>
+              animation.Open(effect =>
+                  effect.Fade(FadeDirection.In)))
+          .Items(tabstrip =>
+          {
+              tabstrip.Add().Text("Калькулятор")
+                  .Selected(true)
+                  .Content
+                  (@<text>
+                       @(Html.Kendo().DropDownList()
+                      .Name("color")
+                      .DataTextField("Text")
+                      .DataValueField("Value")
+                      .Events(e => e.Change("change"))
+                      .BindTo(new List<SelectListItem>() {
+                          new SelectListItem() {
+                              Text = "Black",
+                              Value = "1"
+                          },
+                          new SelectListItem() {
+                              Text = "Orange",
+                              Value = "2"
+                          },
+                          new SelectListItem() {
+                              Text = "Grey",
+                              Value = "3"
+                          }
+                      })
+                      .Value("1")
+                      .HtmlAttributes(new { style = "width: 100%" })
+                      )
+                  </text>);
+
+              tabstrip.Add().Text("Отслежнивание")
+                  .Content(@<text>
+                    <div class="weather">
+                        <h2>29<span>&ordm;C</span></h2>
+                        <p>Sunny weather in New York.</p>
+                    </div>
+                    <span class="sunny">&nbsp;</span>
+                  </text>);
+
+
+
+          })
+    )
+</div>
+
+
+
+<style>
+    .div_tabstrip
+    {
+        width:35%;
+        float:right;
+    }
+    #cap {
+        width: 242px;
+        height: 225px;
+        margin: 20px auto;
+        background-image: url('@Url.Content("~/shared/web/dropdownlist/cap.png")');
+        background-repeat: no-repeat;
+        background-color: transparent;
+    }
+    .black-cap {
+        background-position: 0 0;
+    }
+    .grey-cap {
+        background-position: 0 -225px;
+    }
+    .orange-cap {
+        background-position: 0 -450px;
+    }
+</style>
+
+
+<script>
+    function change() {
+        var value = $("#color").val();
+        $("#cap")
+            .toggleClass("black-cap", value == 1)
+            .toggleClass("orange-cap", value == 2)
+            .toggleClass("grey-cap", value == 3);
+    };
+
+
+</script>
